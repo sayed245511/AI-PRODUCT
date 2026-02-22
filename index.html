@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zentova Business Pro</title>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="auth-page" class="page-container">
+        <div class="card auth-card">
+            <h1 class="logo">ZENTOVA</h1>
+            <div class="auth-toggle">
+                <button onclick="toggleAuth('login')" id="btn-login-tab" class="active">লগইন</button>
+                <button onclick="toggleAuth('signup')" id="btn-signup-tab">নতুন দোকান</button>
+            </div>
+            <div id="login-form">
+                <input type="email" id="login-email" placeholder="ইমেইল">
+                <input type="password" id="login-pass" placeholder="পাসওয়ার্ড">
+                <button class="btn btn-save" onclick="handleLogin()">লগইন করুন</button>
+                <p onclick="handleForgotPassword()" class="forgot-link">পাসওয়ার্ড ভুলে গেছেন?</p>
+            </div>
+            <div id="signup-form" style="display: none;">
+                <input type="text" id="shop-name" placeholder="দোকানের নাম">
+                <input type="email" id="signup-email" placeholder="মালিকের ইমেইল">
+                <input type="password" id="signup-pass" placeholder="পাসওয়ার্ড (মিনিমাম ৬)">
+                <button class="btn btn-save" onclick="handleSignup()">দোকান রেজিস্টার করুন</button>
+            </div>
+            <p id="auth-status" class="status-msg"></p>
+        </div>
+    </div>
+
+    <div id="main-app" style="display: none;">
+        <div class="top-bar">
+    <div style="display: flex; flex-direction: column;">
+        <h1 class="logo" style="margin:0;">ZENTOVA</h1>
+        <div style="font-size: 14px; color: #00d2ff; margin-top: 5px; font-weight: bold;">
+            👤 <span id="display-user-name">লোড হচ্ছে...</span> | 
+            🏪 <span id="display-shop-name">লোড হচ্ছে...</span>
+        </div>
+        <small id="display-role" style="color: #888;"></small>
+    </div>
+    <button class="logout-btn" onclick="handleLogout()">Logout</button>
+</div>
+        <div id="home-menu" class="menu-container">
+            <button class="menu-btn check-btn" onclick="showPage('check-page')">
+                <span class="icon">🔎</span>
+                <span>পন্যের মূল্য চেক</span>
+            </button>
+            
+            <div id="admin-only-tools">
+                <button class="menu-btn add-btn" onclick="showPage('add-page')">
+                    <span class="icon">➕</span>
+                    <span>নতুন পন্য যোগ</span>
+                </button>
+                <button class="menu-btn staff-btn" onclick="showPage('staff-page')">
+                    <span class="icon">👥</span>
+                    <span>স্টাফ ম্যানেজমেন্ট</span>
+                </button>
+            </div>
+
+            <button class="menu-btn list-btn" onclick="showInventory()">
+                <span class="icon">📋</span>
+                <span>সব পন্যের তালিকা</span>
+            </button>
+        </div>
+
+        <div id="check-page" class="page-container" style="display: none;">
+            <div class="page-header"><button class="back-btn" onclick="showPage('home-menu')">⬅</button><h2>মূল্য চেকার</h2></div>
+            <div class="card">
+                <button class="btn btn-scan" onclick="startScanner('search')">🔍 স্ক্যান করুন</button>
+                <div id="reader"></div>
+                <div id="displayArea">
+                    <h3 id="resName">পন্যের নাম</h3>
+                    <div id="priceInfo" class="price-box">মূল্য</div>
+                    <p id="resBarcodeDisplay" class="barcode-text"></p>
+                    <button class="btn btn-delete" onclick="deleteProduct()">মুছে ফেলুন</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="add-page" class="page-container" style="display: none;">
+            <div class="page-header"><button class="back-btn" onclick="showPage('home-menu')">⬅</button><h2>Add product</h2></div>
+            <div class="card">
+                <button class="btn btn-scan" onclick="startScanner('save')">📷 Barcode scan</button>
+                <div id="reader_add"></div>
+                
+                <div id="statusText" class="status-msg" style="margin: 10px 0; font-size: 13px;">স্ক্যান করুন বা নিজে লিখুন</div>
+                
+                <input type="text" id="barcode" placeholder="বারকোড নম্বর">
+                <input type="text" id="pName" placeholder="Name">
+                <input type="text" id="pBrand" placeholder="Brand/Company">
+                
+                <div class="price-row">
+                    <input type="number" id="pBuy" placeholder="Purchase price">
+                    <input type="number" id="pSell" placeholder="Selling price">
+                </div>
+                <button class="btn btn-save" id="saveBtn" onclick="saveProduct()">সেভ করুন</button>
+            </div>
+        </div>
+
+        <div id="staff-page" class="page-container" style="display: none;">
+            <div class="page-header"><button class="back-btn" onclick="showPage('home-menu')">⬅</button><h2>স্টাফ যোগ করুন</h2></div>
+            <div class="card">
+                <input type="email" id="staff-email" placeholder="স্টাফের ইমেইল">
+                <input type="password" id="staff-pass" placeholder="পাসওয়ার্ড">
+                <select id="staff-role" class="custom-select">
+                    <option value="member">মেম্বার</option>
+                    <option value="admin">এডমিন</option>
+                </select>
+                <button class="btn btn-save" onclick="addStaff()">মেম্বার যোগ করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="inventoryModal" class="modal">
+        <div class="modal-content"><span class="close" onclick="closeInventory()">&times;</span><h2>Inventory</h2><div id="listContainer"></div></div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
+    <script src="js/scanner.js"></script>
+</body>
+</html>
