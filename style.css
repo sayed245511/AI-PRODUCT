@@ -1,0 +1,52 @@
+/* Zentova Pro Dashboard & Auth Style */
+:root { 
+    --primary: #00d2ff; 
+    --bg: #0b1118; 
+    --glass: rgba(255, 255, 255, 0.06); 
+    --card-border: rgba(255, 255, 255, 0.12);
+    --text-main: #ffffff;
+    --success: #00e676;
+    --warning: #ff9100;
+    --danger: #ff1744;
+}
+
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; padding: 0; }
+
+.top-bar { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--card-border); }
+.logo { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: var(--primary); margin: 0; }
+.logout-btn { background: none; border: 1px solid var(--danger); color: var(--danger); padding: 5px 12px; border-radius: 8px; cursor: pointer; }
+
+/* Auth & Forms */
+.auth-card { max-width: 400px; margin: 60px auto; text-align: center; }
+.auth-toggle { display: flex; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 5px; margin: 25px 0; }
+.auth-toggle button { flex: 1; padding: 10px; border: none; background: none; color: #a0aab8; cursor: pointer; font-weight: bold; }
+.auth-toggle button.active { background: var(--primary); color: #000; border-radius: 8px; }
+
+input, .custom-select { width: 100%; padding: 16px; margin: 10px 0; border-radius: 14px; border: 1px solid #333; background: #f8f9fa; color: #1a1a1a; font-size: 16px; }
+
+.btn { width: 100%; padding: 18px; border: none; border-radius: 14px; font-weight: bold; cursor: pointer; }
+.btn-scan { background: var(--warning); color: white; margin-bottom: 15px; }
+.btn-save { background: var(--success); color: white; }
+.btn-delete { background: var(--danger); color: white; margin-top: 20px; }
+
+/* Dashboard Buttons */
+.menu-container { display: flex; flex-direction: column; gap: 15px; padding: 25px; }
+.menu-btn { display: flex; align-items: center; padding: 25px; border: 1px solid var(--card-border); border-radius: 20px; background: var(--glass); color: white; cursor: pointer; }
+.menu-btn .icon { font-size: 30px; margin-right: 20px; }
+.check-btn { border-left: 5px solid #3498db; }
+.add-btn { border-left: 5px solid var(--warning); }
+.staff-btn { border-left: 5px solid #2ecc71; }
+.list-btn { border-left: 5px solid #9b59b6; }
+
+.forgot-link { font-size: 13px; color: var(--primary); cursor: pointer; margin-top: 15px; text-decoration: underline; }
+
+/* Result Display */
+#displayArea { display: none; background: #fff; color: #121212; padding: 25px; border-radius: 28px; text-align: center; margin-top: 20px; }
+.price-box { background: #eef9ff; padding: 18px; border-radius: 18px; color: #004a99; font-weight: 800; font-size: 24px; border: 1px dashed var(--primary); }
+
+/* Modal */
+.modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
+.modal-content { background: #fff; margin: 10% auto; padding: 25px; width: 90%; border-radius: 30px; color: #1a1a1a; }
+.close { float: right; font-size: 30px; cursor: pointer; }
+.product-table { width: 100%; border-collapse: collapse; }
+.product-table td { border-bottom: 1px solid #eee; padding: 15px 5px; }
